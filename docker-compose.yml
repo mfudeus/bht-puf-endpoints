@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  app:
+    build: ./frontend
+    restart: always
+    environment:
+      MONGODB_URI: "mongodb://root:RVpyT2w9GU9i@db/"
+      TOKEN_SECRET: "9uGprHXZDkPkWglcRq/qX2X3mvnM!iZgM/6g/OyNpjkud4Kb4eWjVZZd!thy07CR-b5Kz0V-uvz0j1Ef5cZAJdtPnX45gt8XLT?z?Tdt7Va7a=e7jm?W6I1OxDo/Q7lcDHWNet5Cp8/9zKQn7?VVgN13xBChM-ulqsEg?GO72KIhmnK4CX-DF/xIGdCteN2tql3U2FEyVQUAbiPu0y3GGTrugbxbVC/DwOp748m/Jw9C/A-Qe30BmXP=6H/8H"
+    depends_on:
+      - "db"
+    # volumes:
+    #   - data/uploads:/usr/src/app/uploads
+    ports:
+      - "3000:3000"
+    networks:
+      - bht-puf-network
+
+  db:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: "bht-puf"
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "RVpyT2w9GU9i"
+    ports:
+      - 27017:27017
+    # volumes:
+    #   - data/db:/data/db
+    networks:
+      - bht-puf-network
+
+networks:
+  bht-puf-network:
+    driver: bridge
